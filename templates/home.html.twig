@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Bienvenue à la home page</h3>
+    <h5>Voici les différents skills que je connais !</h5>
+    <br>
+    <div class="d-flex justify-content-around row">
+        {% for skill in skills %}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded align-items-center" style="height: auto">
+                <div class="card-header">
+                    Le skill :
+                    <br>
+                    {{ skill.name }}
+                </div>
+                <div class="card-body">
+                    Description :
+                    <br>
+                    {{ skill.description }}
+                </div>
+                <div class="card-footer">
+                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~skill.image) }}" alt="">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
