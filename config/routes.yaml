@@ -1,3 +1,15 @@
 home:
   path: /
   controller: App\Controller\DefaultController::indexAction
+
+update:
+  path: /update/{id}/{name}
+  controller: App\Controller\UpdateController::updateController
+
+addNewObject:
+  path: /add/{name}
+  controller: App\Controller\NewObjectController::newObjectAction
+
+delete:
+  path: /delete/{id}/{name}
+  controller: App\Controller\DeleteController::deleteAction

@@ -11,5 +11,15 @@ body{
 }
 
 .form{
-    background-color: #1E8091;
+    background-image: url("https://image.freepik.com/free-vector/dark-graphic-wavy-wallpaper_23-2148400270.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.deleteIcon{
+    background-image: url("../assets/images/deleteIcon.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 4vh;
+    width: 4vw;
 }

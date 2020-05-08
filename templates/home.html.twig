@@ -9,19 +9,25 @@
     <h5>Voici les différents skills que je connais !</h5>
     <div class="d-flex justify-content-around row">
         {% for skill in skills %}
-            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded align-items-center" style="height: auto">
-                <div class="card-header">
-                    Le skill :
-                    <br>
-                    {{ skill.name }}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+                    <div class="card-header">
+                        <p>Le skill :</p>
+                        <a class="deleteIcon" href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}"></a>
+                        <br>
+                        <a href="{{ path('update', {"id" : skill.id,"name" : 'skill'}) }}">{{ skill.name }}</a>
+                    </div>
+                    <div class="card-body">
+                        Description :
+                        <br>
+                        {{ skill.description }}
+                    </div>
+                    <div class="card-footer">
+                        <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~skill.image) }}" alt="">
+                    </div>
                 </div>
-                <div class="card-body">
-                    Description :
-                    <br>
-                    {{ skill.description }}
-                </div>
-                <div class="card-footer">
-                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~skill.image) }}" alt="">
+                <div class="d-flex justify-content-end">
+                    <a class="deleteIcon" href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}"></a>
                 </div>
             </div>
         {% endfor %}
@@ -32,11 +38,17 @@
     <h5>Voici les différents Categories que je connais !</h5>
     <div class="d-flex justify-content-around row">
         {% for category in categories %}
-            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded align-items-center" style="height: auto">
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+
+                </div>
                 <div class="card-header">
                     La categorie :
                     <br>
-                    {{ category.name }}
+                    <a href="{{ path('update', {"id" : category.id,"name" : 'category'}) }}">{{ category.name }}</a>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a class="deleteIcon" href="{{ path('delete', {"id" : category.id,"name" : 'category'}) }}"></a>
                 </div>
             </div>
         {% endfor %}
@@ -48,20 +60,26 @@
     <h5>Voici les différents projets que je connais !</h5>
     <div class="d-flex justify-content-around row">
         {% for project in projects %}
-            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded align-items-center" style="height: auto">
-                <div class="card-header">
-                    Le projet :
-                    <br>
-                    {{ project.name }}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+                    <div class="card-header">
+                        Le projet :
+                        <br>
+                        <a href="{{ path('update', {"id" : project.id,"name" : 'project'}) }}">{{ project.name }}</a>
+                    </div>
+                    <div class="card-body">
+                        Description :
+                        <br>
+                        {{ project.description }}
+                    </div>
+                    <div class="card-footer">
+                        <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
+                    </div>
                 </div>
-                <div class="card-body">
-                    Description :
-                    <br>
-                    {{ project.description }}
+                <div class="d-flex justify-content-end">
+                    <a class="deleteIcon" href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}"></a>
                 </div>
-                <div class="card-footer">
-                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
-                </div>
+
             </div>
         {% endfor %}
     </div>
@@ -72,94 +90,23 @@
     <h5>Voici les différents technos que je connais !</h5>
     <div class="d-flex justify-content-around row">
         {% for techno in technos %}
-            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded align-items-center" style="height: auto">
-                <div class="card-header">
-                    La techno :
-                    <br>
-                    {{ techno.name }}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+                    <div class="card-header">
+                        La techno :
+                        <br>
+                        <a href="{{ path('update', {"id" : techno.id,"name" : 'techno'}) }}">{{ techno.name }}</a>
+                    </div>
+                    <div class="card-footer">
+                        <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~techno.image) }}" alt="">
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~techno.image) }}" alt="">
+                <div class="d-flex justify-content-end">
+                    <a class="deleteIcon" href="{{ path('delete', {"id" : techno.id,"name" : 'techno'}) }}"></a>
                 </div>
+
             </div>
         {% endfor %}
-    </div>
-
-
-    <br>
-    <hr>
-    <div class="container ">
-
-    <div class="row d-flex justify-content-around">
-        <div class="col-5 form m-4">
-            <h2 class="text-center" style="font-style: italic; color: white">Formulaire skill</h2>
-
-            {{ form_start(skillForm) }}
-
-            {{ form_label(skillForm.name,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(skillForm.name, {'attr': {'placeholder': 'skill'}}) }}</p>
-
-            {{ form_label(skillForm.description,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(skillForm.description, {'attr': {'placeholder': 'description'}}) }}</p>
-
-            {{ form_label(skillForm.image,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(skillForm.image, {'attr': {'placeholder': 'image'}}) }}</p>
-
-            {{ form_label(skillForm.techno,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(skillForm.techno, {'attr': {'': ''}}) }}</p>
-
-            {{ form_end(skillForm) }}
-        </div>
-
-        <div class="col-5 form m-4">
-            <h2 class="text-center" style="font-style: italic; color: white">Formulaire category</h2>
-
-            {{ form_start(categoryForm) }}
-
-            {{ form_label(categoryForm.name,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(categoryForm.name, {'attr': {'placeholder': 'category'}}) }}</p>
-
-            {{ form_end(categoryForm) }}
-        </div>
-    </div>
-
-    <div class="row d-flex justify-content-around">
-        <div class="col-5 form m-4">
-            <h2 class="text-center" style="font-style: italic; color: white">Formulaire project</h2>
-
-            {{ form_start(projectForm) }}
-
-            {{ form_label(projectForm.name,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(projectForm.name, {'attr': {'placeholder': 'projet'}}) }}</p>
-
-            {{ form_label(projectForm.description,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(projectForm.description, {'attr': {'placeholder': 'description'}}) }}</p>
-
-            {{ form_label(projectForm.image,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(projectForm.image, {'attr': {'placeholder': 'image'}}) }}</p>
-
-            {{ form_label(projectForm.skills,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(projectForm.skills, {'attr': {'class': 'row m-4 d-flex justify-content-around'}}) }}</p>
-
-            {{ form_end(projectForm) }}
-        </div>
-
-        <div class="col-5 form m-4">
-            <h2 class="text-center" style="font-style: italic; color: white">Formulaire techno</h2>
-
-            {{ form_start(technoForm) }}
-
-            {{ form_label(technoForm.name,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(technoForm.name, {'attr': {'placeholder': 'techno'}}) }}</p>
-
-            {{ form_label(technoForm.image,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(technoForm.image, {'attr': {'placeholder': 'image'}}) }}</p>
-
-            {{ form_label(technoForm.category,null, {'label_attr': {'class': 'red-bg', 'style': 'color : white'} }) }}
-            <p>{{ form_widget(technoForm.category, {'attr': {'placeholder': ''}}) }}</p>
-
-            {{ form_end(technoForm) }}
-        </div>
     </div>
 
 
