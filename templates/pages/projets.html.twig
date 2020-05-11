@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container ">
+        <div class="col-5 form m-4 rounded">
+            <h2 class="text-center" style="font-style: italic; color: white">Projets par : {{ searchName }}</h2>
+        </div>
+        <div class="row">
+            {% for project in projects %}
+            {% for skill in project.skills %}
+
+                <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                    <div class="align-items-center">
+                        <div class="card-header">
+                            Le projet :
+                            <br>
+                            <a href="{{ path('update', {"id" : project.id,"name" : 'project'}) }}">{{ project.name }}</a>
+                        </div>
+                        <div class="card-body">
+                            Description :
+                            <br>
+                            {{ project.description }}
+                        </div>
+                        <div class="card-footer">
+                            <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="row d-flex justify-content-between">
+                        {% for skill in project.skills %}
+                            <div>
+                                <span style="font-style: italic">Tags :</span>
+                                <a href="{{ path('projets', {"name" : 'skill',"searchName" : skill.name}) }}" class="badge badge-primary">{{ skill.name }}</a>
+                                <a href="{{ path('projets', {"name" : 'techno',"searchName" : skill.techno.name}) }}" class="badge badge-success">{{ skill.techno.name }}</a>
+                                <a href="{{ path('projets', {"name" : 'category',"searchName" : skill.techno.category.name}) }}" class="badge badge-info">{{ skill.techno.category.name }}</a>
+                            </div>
+                            <div>
+                                <a href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}">Supprimer</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

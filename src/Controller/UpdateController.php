@@ -10,6 +10,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TechnoRepository;
+use App\Service\FormsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,10 +64,15 @@ class UpdateController extends AbstractController
                 $form = $this->createForm('App\Form\TechnoType',$techno);
                 $form->handleRequest($request);
                 if($form->isSubmitted()) {
+                $file = $form->get('image')->getData();
                     $techno = $form->getData();
-                    $manager->persist($techno);
-                    $manager->flush();
-                    return $this->redirectToRoute('home');
+                    if($file) {
+                        $newFilename = FormsManager::handleFileUpload($file, $this->getParameter('uploads'));
+                        $techno->setImage($newFilename);
+                        $manager->persist($techno);
+                        $manager->flush();
+                        return $this->redirectToRoute('home');
+                    }
                 }
                 break;
         }

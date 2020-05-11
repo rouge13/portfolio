@@ -58,8 +58,9 @@
     <br>
     <hr>
     <h5>Voici les différents projets que je connais !</h5>
-    <div class="d-flex justify-content-around row">
+    <div class="container row">
         {% for project in projects %}
+
             <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
                 <div class="align-items-center">
                     <div class="card-header">
@@ -76,12 +77,26 @@
                         <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <a class="deleteIcon" href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}"></a>
+                <br>
+                <hr>
+                <div class="row d-flex justify-content-between">
+                    {% for skill in project.skills %}
+                        <div>
+                            <span style="font-style: italic">Tags :</span>
+                            <a href="{{ path('projets', {"name" : 'skill',"searchId" : skill.id}) }}" class="badge badge-primary">{{ skill.name }}</a>
+                            <a href="{{ path('projets', {"name" : 'techno',"searchId" : skill.techno.id}) }}" class="badge badge-success">{{ skill.techno.name }}</a>
+                            <a href="{{ path('projets', {"name" : 'category',"searchId" : skill.techno.category.id}) }}" class="badge badge-info">{{ skill.techno.category.name }}</a>
+                        </div>
+                        <div>
+                            <a href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}">Supprimer</a>
+                        </div>
+                    {% endfor %}
                 </div>
-
             </div>
+
         {% endfor %}
+
+
     </div>
 
 

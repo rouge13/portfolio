@@ -16,10 +16,6 @@ body{
     background-size: cover;
 }
 
-.deleteIcon{
-    background-image: url("../assets/images/deleteIcon.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 4vh;
-    width: 4vw;
-}
+
+
+

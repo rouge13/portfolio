@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\FormsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class NewObjectController extends AbstractController
 {
@@ -52,11 +54,16 @@ class NewObjectController extends AbstractController
                 $form = $this->createForm('App\Form\TechnoType');
                 $form->handleRequest($request);
                 if($form->isSubmitted()) {
+                    $file = $form->get('image')->getData();
                     $techno = $form->getData();
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($techno);
-                    $manager->flush();
-                    return $this->redirectToRoute('home');
+                    if($file) {
+                        $newFilename = FormsManager::handleFileUpload($file, $this->getParameter('uploads'));
+                        $techno->setImage($newFilename);
+                        $manager = $this->getDoctrine()->getManager();
+                        $manager->persist($techno);
+                        $manager->flush();
+                        return $this->redirectToRoute('home');
+                    }
                 }
                 break;
         }
