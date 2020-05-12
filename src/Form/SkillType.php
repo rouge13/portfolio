@@ -7,6 +7,7 @@ use App\Entity\Skill;
 use App\Entity\Techno;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +26,9 @@ class SkillType extends AbstractType
                 'label_attr'=>['class'=> 'red-bg', 'style'=> 'color : white'],
                 'attr' => ['placeholder' => 'description']
             ])
-            ->add('image', TextType::class, [
+            ->add('image',FileType::class, [
+                'mapped'=>false,
+                'required' =>false,
                 'label_attr'=>['class'=> 'red-bg', 'style'=> 'color : white'],
                 'attr' => ['placeholder' => 'image']
             ])

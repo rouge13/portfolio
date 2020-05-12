@@ -3,15 +3,15 @@ home:
   controller: App\Controller\DefaultController::indexAction
 
 update:
-  path: /update/{id}/{name}
+  path: /admin/update/{id}/{name}
   controller: App\Controller\UpdateController::updateController
 
 addNewObject:
-  path: /add/{name}
+  path: /admin/add/{name}
   controller: App\Controller\NewObjectController::newObjectAction
 
 delete:
-  path: /delete/{id}/{name}
+  path: /admin/delete/{id}/{name}
   controller: App\Controller\DeleteController::deleteAction
 
 projets:

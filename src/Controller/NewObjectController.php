@@ -18,11 +18,16 @@ class NewObjectController extends AbstractController
                 $form = $this->createForm('App\Form\SkillType');
                 $form->handleRequest($request);
                 if($form->isSubmitted()) {
+                    $file = $form->get('image')->getData();
                     $skill = $form->getData();
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($skill);
-                    $manager->flush();
-                    return $this->redirectToRoute('home');
+                    if($file) {
+                        $newFilename = FormsManager::handleFileUpload($file, $this->getParameter('uploads'));
+                        $skill->setImage($newFilename);
+                        $manager = $this->getDoctrine()->getManager();
+                        $manager->persist($skill);
+                        $manager->flush();
+                        return $this->redirectToRoute('home');
+                    }
                 }
                 break;
 
@@ -35,6 +40,7 @@ class NewObjectController extends AbstractController
                     $manager->persist($category);
                     $manager->flush();
                     return $this->redirectToRoute('home');
+
                 }
                 break;
 
@@ -42,11 +48,16 @@ class NewObjectController extends AbstractController
                 $form = $this->createForm('App\Form\ProjectType');
                 $form->handleRequest($request);
                 if($form->isSubmitted()) {
+                    $file = $form->get('image')->getData();
                     $project = $form->getData();
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($project);
-                    $manager->flush();
-                    return $this->redirectToRoute('home');
+                    if($file) {
+                        $newFilename = FormsManager::handleFileUpload($file, $this->getParameter('uploads'));
+                        $project->setImage($newFilename);
+                        $manager = $this->getDoctrine()->getManager();
+                        $manager->persist($project);
+                        $manager->flush();
+                        return $this->redirectToRoute('home');
+                    }
                 }
                 break;
 
