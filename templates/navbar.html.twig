@@ -5,24 +5,35 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <div class="row">
+                <a class="nav-item nav-link {{  app.request.pathInfo == '/' ? 'active' : '' }}" href="{{ path('home') }}">Home</a>
 
-            <a class="nav-item nav-link {{  app.request.pathInfo == '/' ? 'active' : '' }}" href="{{ path('home') }}">Home</a>
 
-            <div class="dropdown show">
-                <a class="btn btn-secondary dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Ajouter
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ path('addNewObject',{'name':'skill'}) }}">Skill</a>
-                    <a class="dropdown-item" href="{{ path('addNewObject',{'name':'category'}) }}">Category</a>
-                    <a class="dropdown-item" href="{{ path('addNewObject',{'name':'techno'}) }}">Techno</a>
-                    <a class="dropdown-item" href="{{ path('addNewObject',{'name':'project'}) }}">Project</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ajouter
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path('addNewObject',{'name':'skill'}) }}">Skill</a>
+                            <a class="dropdown-item" href="{{ path('addNewObject',{'name':'category'}) }}">Category</a>
+                            <a class="dropdown-item" href="{{ path('addNewObject',{'name':'techno'}) }}">Techno</a>
+                            <a class="dropdown-item" href="{{ path('addNewObject',{'name':'project'}) }}">Project</a>
+                        </div>
+                    </div>
+                {% endif %}
 
+            </div>
+            <div>
+                <div class="">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Connection</a>
+                    {% endif %}
                 </div>
             </div>
-
         </div>
-
     </nav>
 </div>
