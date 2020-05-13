@@ -8,6 +8,7 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <div class="row">
                 <a class="nav-item nav-link {{  app.request.pathInfo == '/' ? 'active' : '' }}" href="{{ path('home') }}">Home</a>
+{#                <a class="nav-item nav-link {{  about in app.request.pathInfo ? 'active' : '' }}" href="{{ path('about') }}">About</a>#}
 
 
                 {% if is_granted('ROLE_ADMIN') %}
@@ -28,6 +29,7 @@
             <div>
                 <div class="">
                     {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('adminHome') }}">Espace Administrateur</a>
                         <a href="{{ path('app_logout') }}">Déconnexion</a>
                     {% else %}
                         <a href="{{ path('app_login') }}">Connection</a>

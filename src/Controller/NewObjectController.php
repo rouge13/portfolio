@@ -26,6 +26,7 @@ class NewObjectController extends AbstractController
                         $manager = $this->getDoctrine()->getManager();
                         $manager->persist($skill);
                         $manager->flush();
+                        $this->addFlash('info',"skill : ".$skill->getName()." well added");
                         return $this->redirectToRoute('home');
                     }
                 }
@@ -39,6 +40,7 @@ class NewObjectController extends AbstractController
                     $manager = $this->getDoctrine()->getManager();
                     $manager->persist($category);
                     $manager->flush();
+                    $this->addFlash('info',"category : ".$category->getName()." well added");
                     return $this->redirectToRoute('home');
 
                 }
@@ -56,6 +58,7 @@ class NewObjectController extends AbstractController
                         $manager = $this->getDoctrine()->getManager();
                         $manager->persist($project);
                         $manager->flush();
+                        $this->addFlash('info',"project : ".$project->getName()." well added");
                         return $this->redirectToRoute('home');
                     }
                 }
@@ -73,6 +76,7 @@ class NewObjectController extends AbstractController
                         $manager = $this->getDoctrine()->getManager();
                         $manager->persist($techno);
                         $manager->flush();
+                        $this->addFlash('info',"techno : ".$techno->getName()." well added");
                         return $this->redirectToRoute('home');
                     }
                 }

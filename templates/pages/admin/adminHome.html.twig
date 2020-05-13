@@ -1,0 +1,165 @@
+{% extends 'pages/admin/adminBase.html.twig' %}
+{% block body %}
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+
+
+
+
+        {#    <h2>connecté sur l'email : {{ app.user.email }}</h2>#}
+
+        {#    {{ dump(app.user) }}#}
+
+
+        {% for message in app.flashes('info') %}
+            <hr>
+            <div class="w-full">
+                <span style="color: #c82829;font-size: large" class="styleMessage flash-info">{{ message }}</span>
+            </div>
+            <hr>
+        {% endfor %}
+
+
+        <h5>Voici les différents skills que je connais !</h5>
+
+        <table class="table col-12 table-dark">
+            <thead>
+            <tr>
+                <th>Nom à mettre à jour</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Suppression</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for skill in skills %}
+                <tr class="table-hover">
+                    <td>
+                        <a href="{{ path('update', {"id" : skill.id,"name" : 'skill'}) }}">{{ skill.name }}</a>
+                    </td>
+                    <td>
+                        {{ skill.description }}
+                    </td>
+                    <td>
+                        <img style="" src="{{ asset('assets/images/'~skill.image) }}" alt="">
+                    </td>
+                    <td>
+                        <a href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}">X</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <h5>Voici les différents Categories que je connais !</h5>
+
+
+        <table class="table col-12 table-dark">
+            <thead>
+            <tr>
+                <th>Nom à mettre à jour</th>
+                <th>Suppression</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr class="table-hover">
+                    <td>
+                        <a href="{{ path('update', {"id" : category.id,"name" : 'category'}) }}">{{ category.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('delete', {"id" : category.id,"name" : 'category'}) }}">X</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <h5>Voici les différents projets que je connais !</h5>
+
+
+        <table class="table col-12 table-dark">
+            <thead>
+            <tr>
+                <th>Nom à mettre à jour</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Nom des skills</th>
+                <th>Suppression</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr class="table-hover">
+                    <td>
+                        <a href="{{ path('update', {"id" : project.id,"name" : 'project'}) }}">{{ project.name }}</a>
+                    </td>
+                    <td>
+                        {{ project.description }}
+                    </td>
+                    <td>
+                        <img style="" src="{{ asset('assets/images/'~project.image) }}" alt="">
+                    </td>
+                    <td>
+                        {% for skill in project.skills %}
+                            <div>
+                                <a href="{{ path('projets', {"name" : 'skill',"searchId" : skill.id}) }}" class="badge badge-primary">{{ skill.name }}</a>
+                                <a href="{{ path('projets', {"name" : 'techno',"searchId" : skill.techno.id}) }}" class="badge badge-success">{{ skill.techno.name }}</a>
+                                <a href="{{ path('projets', {"name" : 'category',"searchId" : skill.techno.category.id}) }}" class="badge badge-info">{{ skill.techno.category.name }}</a>
+                            </div>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}">X</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <h5>Voici les différents technos que je connais !</h5>
+
+        <table class="table col-12 table-dark">
+            <thead>
+            <tr>
+                <th>Nom à mettre à jour</th>
+                <th>Image</th>
+                <th>Suppression</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for techno in technos %}
+
+                <tr class="table-hover">
+                    <td>
+                        <a href="{{ path('update', {"id" : techno.id,"name" : 'techno'}) }}">{{ techno.name }}</a>
+                    </td>
+                    <td>
+                        <img style="" src="{{ asset('assets/images/'~techno.image) }}" alt="">
+                    </td>
+                    <td>
+                        <a href="{{ path('delete', {"id" : techno.id,"name" : 'techno'}) }}">X</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <br>
+
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+

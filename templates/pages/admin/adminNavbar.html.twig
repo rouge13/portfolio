@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+
+        <div class="navbar navbar-inverse navbar-fixed-left d-flex justify-content-between">
+            <a class="navbar-brand" href="{{ path('home') }}">Home</a>
+            <h3>Ajouter</h3>
+            <ul>
+                <li>
+                    <a href="{{ path('addNewObject',{'name':'skill'}) }}">Skill</a>
+                </li>
+                <li>
+                    <a href="{{ path('addNewObject',{'name':'category'}) }}">Category</a>
+                </li>
+                <li>
+                    <a href="{{ path('addNewObject',{'name':'techno'}) }}">Techno</a>
+                </li>
+                <li>
+                    <a href="{{ path('addNewObject',{'name':'project'}) }}">Project</a>
+                </li>
+            </ul>
+
+            <h3>Pages</h3>
+            <ul>
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+
+            <h3>Access</h3>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('app_login') }}">Connection</a>
+                </li>
+            {% endif %}
+
+
+
+
+        </div>
+    </nav>
+
+</div>

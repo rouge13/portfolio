@@ -18,7 +18,8 @@ projets:
   path: /projets/{name}/{searchId}
   controller: App\Controller\ProjetsController::projetsAction
 
-
-
+adminHome:
+  path: /admin/
+  controller: App\Controller\Admin\AdminController::indexAction
 
 

@@ -19,6 +19,22 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+    public function findByTableAllProjectLinked($searchId,$name)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p 
+        FROM App\Entity\Project p
+        INNER JOIN p.Skill s
+        INNER JOIN s.Techno t
+        INNER JOIN t.Category c
+        WHERE p.id = :id'
+        )->setParameter('id', $productId);
+
+        return $query->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

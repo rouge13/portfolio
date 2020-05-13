@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{#<p>Username: {{ app.user.email ?? 'hammerjulien67@gmail.com' }}</p>#}
-{#{% if app.debug %}#}
-{#    <p>Request method: {{ app.request.method }}</p>#}
-{#    <p>Application Environment: {{ app.environment }}</p>#}
 
-{#    <h3>Bienvenue à la home page</h3>#}
-<br>
-<hr>
+    {#    <h2>connecté sur l'email : {{ app.user.email }}</h2>#}
+
+    {#    {{ dump(app.user) }}#}
+
+
+    {% for message in app.flashes('info') %}
+        <hr>
+        <div class="w-full">
+            <span style="color: #C82829;font-size: large" class="styleMessage flash-info">{{ message }}</span>
+        </div>
+        <hr>
+    {% endfor %}
+
+
     <h5>Voici les différents skills que je connais !</h5>
     <div class="d-flex justify-content-around row">
         {% for skill in skills %}
@@ -16,9 +23,12 @@
                 <div class="align-items-center">
                     <div class="card-header">
                         <p>Le skill :</p>
-                        <a class="deleteIcon" href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}"></a>
                         <br>
-                        <a href="{{ path('update', {"id" : skill.id,"name" : 'skill'}) }}">{{ skill.name }}</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('update', {"id" : skill.id,"name" : 'skill'}) }}">{{ skill.name }}</a>
+                        {% else %}
+                            {{ skill.name }}
+                        {% endif %}
                     </div>
                     <div class="card-body">
                         Description :
@@ -30,112 +40,130 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <a class="deleteIcon" href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}"></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('delete', {"id" : skill.id,"name" : 'skill'}) }}">supprimer</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
     </div>
 
-<br>
-<hr>
+    <br>
+    <hr>
     <h5>Voici les différents Categories que je connais !</h5>
-<div class="d-flex justify-content-around row">
-    {% for category in categories %}
-    <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
-        <div class="align-items-center">
+    <div class="d-flex justify-content-around row">
+        {% for category in categories %}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
 
-        </div>
-        <div class="card-header">
-            La categorie :
-            <br>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('update', {"id" : category.id,"name" : 'category'}) }}">{{ category.name }}</a>
-            {% else %}
-                {{ category.name }}
-            {% endif %}
+                </div>
+                <div class="card-header">
+                    La categorie :
+                    <br>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('update', {"id" : category.id,"name" : 'category'}) }}">{{ category.name }}</a>
+                    {% else %}
+                        {{ category.name }}
+                    {% endif %}
 
 
-        </div>
-        <div class="d-flex justify-content-end">
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('delete', {"id" : category.id,"name" : 'category'}) }}">supprimer</a>
-            {% endif %}
+                </div>
+                <div class="d-flex justify-content-end">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('delete', {"id" : category.id,"name" : 'category'}) }}">supprimer</a>
+                    {% endif %}
 
-        </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
 
-<br>
-<hr>
-<h5>Voici les différents projets que je connais !</h5>
-<div class="container row">
-    {% for project in projects %}
+    <br>
+    <hr>
+    <h5>Voici les différents projets que je connais !</h5>
+    <div class="container row">
+        {% for project in projects %}
 
-        <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
-            <div class="align-items-center">
-                <div class="card-header">
-                    Le projet :
-                    <br>
-                    <a href="{{ path('update', {"id" : project.id,"name" : 'project'}) }}">{{ project.name }}</a>
-                </div>
-                <div class="card-body">
-                    Description :
-                    <br>
-                    {{ project.description }}
-                </div>
-                <div class="card-footer">
-                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
-                </div>
-            </div>
-            <br>
-            <hr>
-            <div class="row d-flex justify-content-between">
-                {% for skill in project.skills %}
-                    <div>
-                        <span style="font-style: italic">Tags :</span>
-                        <a href="{{ path('projets', {"name" : 'skill',"searchId" : skill.id}) }}" class="badge badge-primary">{{ skill.name }}</a>
-                        <a href="{{ path('projets', {"name" : 'techno',"searchId" : skill.techno.id}) }}" class="badge badge-success">{{ skill.techno.name }}</a>
-                        <a href="{{ path('projets', {"name" : 'category',"searchId" : skill.techno.category.id}) }}" class="badge badge-info">{{ skill.techno.category.name }}</a>
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+                    <div class="card-header">
+                        Le projet :
+                        <br>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('update', {"id" : project.id,"name" : 'project'}) }}">{{ project.name }}</a>
+                        {% else %}
+                            {{ project.name }}
+                        {% endif %}
+
                     </div>
-                    <div>
-                        <a href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}">Supprimer</a>
+                    <div class="card-body">
+                        Description :
+                        <br>
+                        {{ project.description }}
                     </div>
-                {% endfor %}
-            </div>
-        </div>
-
-    {% endfor %}
-
-
-</div>
-
-
-<br>
-<hr>
-<h5>Voici les différents technos que je connais !</h5>
-<div class="d-flex justify-content-around row">
-    {% for techno in technos %}
-        <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
-            <div class="align-items-center">
-                <div class="card-header">
-                    La techno :
-                    <br>
-                    <a href="{{ path('update', {"id" : techno.id,"name" : 'techno'}) }}">{{ techno.name }}</a>
+                    <div class="card-footer">
+                        <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~project.image) }}" alt="">
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~techno.image) }}" alt="">
+                <br>
+                <hr>
+                <div class="row d-flex justify-content-between">
+                    {% for skill in project.skills %}
+                        <div>
+                            <span style="font-style: italic">Tags :</span>
+                            <a href="{{ path('projets', {"name" : 'skill',"searchId" : skill.id}) }}" class="badge badge-primary">{{ skill.name }}</a>
+                            <a href="{{ path('projets', {"name" : 'techno',"searchId" : skill.techno.id}) }}" class="badge badge-success">{{ skill.techno.name }}</a>
+                            <a href="{{ path('projets', {"name" : 'category',"searchId" : skill.techno.category.id}) }}" class="badge badge-info">{{ skill.techno.category.name }}</a>
+                        </div>
+                        <div>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('delete', {"id" : project.id,"name" : 'project'}) }}">Supprimer</a>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <a class="deleteIcon" href="{{ path('delete', {"id" : techno.id,"name" : 'techno'}) }}"></a>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <br>
+    <hr>
+    <h5>Voici les différents technos que je connais !</h5>
+    <div class="d-flex justify-content-around row">
+        {% for techno in technos %}
+            <div class="card col-4 m-2 shadow p-3 mb-5 bg-white rounded" style="height: auto">
+                <div class="align-items-center">
+                    <div class="card-header">
+                        La techno :
+                        <br>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('update', {"id" : techno.id,"name" : 'techno'}) }}">{{ techno.name }}</a>
+                        {% else %}
+                            {{ techno.name }}
+                        {% endif %}
+
+                    </div>
+                    <div class="card-footer">
+                        <img style="height: 10vh;width: 10vw; object-fit: contain" src="{{ asset('assets/images/'~techno.image) }}" alt="">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="deleteIcon" href="{{ path('delete', {"id" : techno.id,"name" : 'techno'}) }}">Supprimer</a>
+                    {% endif %}
+
+                </div>
+
             </div>
-
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 
 
-{#{% endif %}#}
+    {#{% endif %}#}
 {% endblock %}

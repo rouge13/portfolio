@@ -25,9 +25,10 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Techno::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Techno::class, mappedBy="categories")
      */
     private $technos;
+
 
     public function __construct()
     {
@@ -63,7 +64,7 @@ class Category
     {
         if (!$this->technos->contains($techno)) {
             $this->technos[] = $techno;
-            $techno->setCategory($this);
+            $techno->addCategory($this);
         }
 
         return $this;
@@ -73,12 +74,10 @@ class Category
     {
         if ($this->technos->contains($techno)) {
             $this->technos->removeElement($techno);
-            // set the owning side to null (unless already changed)
-            if ($techno->getCategory() === $this) {
-                $techno->setCategory(null);
-            }
+            $techno->removeCategory($this);
         }
 
         return $this;
     }
+
 }
